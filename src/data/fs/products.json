@@ -1,0 +1,21 @@
+[
+  {
+    "title": "Apple Watch Series 7",
+    "price": 399,
+    "stock": 100,
+    "category": "Electronics",
+    "id": "57672513b55eb0f56a8d4aff"
+  },
+  {
+    "title": "Samsung QLED 4K TV",
+    "price": 1299.99,
+    "stock": 50,
+    "id": "5f5ba591e09b08aa2c868c5f"
+  },
+  {
+    "title": "Philip tv 4k",
+    "price": 1299.99,
+    "stock": 50,
+    "id": "1200059f76cf835225c7e2f8"
+  }
+]
