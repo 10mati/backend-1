@@ -6,7 +6,7 @@ import {
     updatedUser,
     deletedUser
 
-} from "../controllers/users.controllers.js"; 
+} from "../../controllers/users.controllers.js"; 
 
 const usersRouter = Router();
 

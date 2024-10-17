@@ -93,6 +93,27 @@ class UsersManager {
       throw error;
     }
   }
+  
+  async readByEmail(email) {
+    try {
+      const allUsers = await this.readAll(); // Leer todos los usuarios
+      const user = allUsers.find((user) => user.email === email); // Buscar por correo electrónico
+      return user || null; // Retornar el usuario encontrado o null si no existe
+  } catch (error) {
+      console.log(error);
+      throw error;
+  }
+}
+
+async  authenticate(email, password) {
+ 
+  const user = await this.readByEmail(email); 
+  if (user && user.password === password) { // Asegúrate de que la contraseña esté encriptada
+      return user; // Devuelve el usuario si la autenticación es exitosa
+  }
+  return null; // Devuelve null si la autenticación falla
+}
+
 
 }
 

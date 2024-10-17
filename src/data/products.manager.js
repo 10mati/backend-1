@@ -65,7 +65,7 @@ class ProductsManager {
         if (index === -1) {
           return null;
         }
-        // Actualizamos el producto
+        
         all[index] = { ...all[index], ...newData };
         const stringAll = JSON.stringify(all, null, 2);
         await fs.promises.writeFile(this.path, stringAll);

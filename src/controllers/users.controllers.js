@@ -93,13 +93,98 @@ import usersManager from "../data/users.manager.js";
           return next(error);
         }
       }
+
+      async function showLogin(req, res, next) {
+        try {
+            res.render("login.handlebars", {}); 
+        } catch (error) {
+            next(error);
+        }
+    }
   
-  
+      async function login(req, res, next) {
+        try {
+            
+            const { email, password } = req.body;
+            const user = await usersManager.authenticate(email, password); 
+
+            if (user) {
+                res.redirect(`/user/${user.id}`); 
+            } else {
+                const error = new Error("Invalid credentials");
+                error.statusCode = 401;
+                throw error;
+            }
+        } catch (error) {
+            next(error);
+        }
+    }
+
+      async function registerUser(req, res, next) {
+        try {
+            // Renderizar el formulario de registro
+            res.render("register.handlebars", {});
+        } catch (error) {
+            return next(error);
+        }
+    }
+
+
+    
+
+      async function registerUsers(req, res, next) {
+        try {
+          const data = req.body;
+          const { email, password } = data;
+          if (!email || !password) {
+            const error = new Error("email and password are required");
+            error.statusCode = 400;
+            throw error;
+          }
+          
+          // Verificar si el usuario ya existe
+          const existingUser = await usersManager.readByEmail(email);
+          if (existingUser) {
+            const error = new Error("User already exists");
+            error.statusCode = 409; 
+            throw error;
+          }
+      
+          const userId = await usersManager.create(data);
+          return res
+            .status(201)
+            .json({ message: `user registered with id ${userId}` });
+        } catch (error) {
+          return next(error);
+        }
+      }
+
+      async function showUser(req, res, next) {
+        try {
+            const { userId } = req.params; // Asegúrate de que estás usando el nombre correcto
+            const user = await usersManager.readOne(userId);
+            if (user) {
+                res.render("userProfile.handlebars", { user }); // Renderiza la vista del perfil del usuario
+            } else {
+                const error = new Error("User not found");
+                error.statusCode = 404;
+                throw error;
+            }
+        } catch (error) {
+            next(error);
+        }
+    }
+
   export {
     readUsers,
     readUser,
     createUser, 
     deletedUser, 
-    updatedUser
-
+    updatedUser,
+    showLogin,
+    login, 
+    registerUser, 
+    registerUsers, 
+    showUser
+    
   }

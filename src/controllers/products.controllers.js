@@ -40,7 +40,7 @@ async function getAllProducts(req, res, next) {
     }
   }
   
-  async function createGet(req, res, next) {
+  /*async function createGet(req, res, next) {
     try {
       const { title, price, stock } = req.params;
       let { category } = req.query;
@@ -52,13 +52,14 @@ async function getAllProducts(req, res, next) {
         price,
         stock,
         category,
+        photo,
 
       });
       return res.status(201).json({ message: "PRODUCT CREATED", response });
     } catch (error) {
       return next(error);
     }
-  }
+  }*/
   
  async function createProduct(req, res, next) {
     try {
@@ -107,6 +108,24 @@ async function getAllProducts(req, res, next) {
     }
   }
   
+  async function showHome(req, res, next) {
+    try {
+     const products = await productsManager.readAll();
+        return res.render("home.handlebars", { products });
+        
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async function showAdminPanel(req, res, next) {
+    try {
+        const products = await productsManager.readAll(); // Obtener todos los productos
+        return res.render("admin.handlebars", { products }); // Renderizar la vista del panel de administración
+    } catch (error) {
+        next(error);
+    }
+}
  
   
   export {
@@ -115,5 +134,6 @@ async function getAllProducts(req, res, next) {
     createProduct,
     updateProduct,
     destroyProduct,
-    
+    showHome,
+    showAdminPanel
   };

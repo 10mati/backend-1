@@ -8,5 +8,15 @@
     "email": "silvamatias_07@gmail.com",
     "password": 12345678910,
     "id": "50fd07a57f456f5a25f12887"
+  },
+  {
+    "email": "cesarsoto@gmail.com",
+    "password": "12345",
+    "id": "317329b772331d75294ca51f"
+  },
+  {
+    "email": "cecilialuparodi@gmail.com",
+    "password": "1234567",
+    "id": "5fd6253f3e97c14a6dc77d9a"
   }
 ]

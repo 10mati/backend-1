@@ -5,7 +5,7 @@ import {
   createProduct,
   updateProduct,
   destroyProduct,
-} from "../controllers/products.controllers.js";
+} from "../../controllers/products.controllers.js";
 //import isValidData from "../../middlewares/isValidData.mid.js";
 
 

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administración</title>
+</head>
+<body>
+    <h1>Panel de Administración de Productos</h1>
+
+    <h2>Crear Producto</h2>
+    <form id="create-product-form" action="/products" method="POST">
+        <input type="text" name="title" placeholder="Título" required>
+        <input type="number" name="price" placeholder="Precio" required>
+        <input type="number" name="stock" placeholder="Stock" required>
+        <button type="submit">Crear Producto</button>
+    </form>
+
+    <h2>Actualizar Producto</h2>
+    <form id="update-product-form" action="/products/update" method="POST">
+        <input type="text" name="pid" placeholder="ID del Producto" required>
+        <input type="text" name="title" placeholder="Nuevo Título">
+        <input type="number" name="price" placeholder="Nuevo Precio">
+        <input type="number" name="stock" placeholder="Nuevo Stock">
+        <button type="submit">Actualizar Producto</button>
+    </form>
+
+    <h2>Borrar Producto</h2>
+    <form id="delete-product-form" action="/products/delete" method="POST">
+        <input type="text" name="pid" placeholder="ID del Producto" required>
+        <button type="submit">Borrar Producto</button>
+    </form>
+
+    <h2>Lista de Productos</h2>
+    <ul>
+        {{#each products}}
+            <li>{{this.title}} - {{this.price}} - {{this.stock}} <strong>ID: {{this.id}}</strong></li>
+        {{/each}}
+    </ul>
+
+    <script src="/js/admin.js"></script> 
+</body>
+</html>
