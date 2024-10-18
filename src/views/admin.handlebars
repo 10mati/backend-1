@@ -17,7 +17,7 @@
     </form>
 
     <h2>Actualizar Producto</h2>
-    <form id="update-product-form" action="/products/update" method="POST">
+    <form id="update-product-form" action="/products/update" method="PUT">
         <input type="text" name="pid" placeholder="ID del Producto" required>
         <input type="text" name="title" placeholder="Nuevo Título">
         <input type="number" name="price" placeholder="Nuevo Precio">
@@ -26,7 +26,7 @@
     </form>
 
     <h2>Borrar Producto</h2>
-    <form id="delete-product-form" action="/products/delete" method="POST">
+    <form id="delete-product-form" action="/products/delete" method="DELETE">
         <input type="text" name="pid" placeholder="ID del Producto" required>
         <button type="submit">Borrar Producto</button>
     </form>

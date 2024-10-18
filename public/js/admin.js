@@ -34,7 +34,7 @@ updateProductForm.onsubmit = async (e) => {
     const data = Object.fromEntries(formData);
 
     try {
-        const response = await fetch(`/api/products/update/${data.pid}`, {
+        const response = await fetch(`/api/products/${data.pid}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -59,7 +59,7 @@ deleteProductForm.onsubmit = async (e) => {
     const data = Object.fromEntries(formData);
 
     try {
-        const response = await fetch(`api/products/destroy/${data.pid}`, {
+        const response = await fetch(`/api/products/${data.pid}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
