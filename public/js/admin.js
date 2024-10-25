@@ -43,7 +43,7 @@ updateProductForm.onsubmit = async (e) => {
         });
 
         if (response.ok) {
-            window.location.reload(); // Recargar la página para ver los cambios
+            window.location.reload(); 
         } else {
             alert("Error al actualizar el producto");
         }
@@ -52,7 +52,6 @@ updateProductForm.onsubmit = async (e) => {
     }
 };
 
-// Borrar producto
 deleteProductForm.onsubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(deleteProductForm);
@@ -68,7 +67,7 @@ deleteProductForm.onsubmit = async (e) => {
         });
 
         if (response.ok) {
-            window.location.reload(); // Recargar la página para ver los cambios
+            window.location.reload(); 
         } else {
             alert("Error al borrar el producto");
         }

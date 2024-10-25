@@ -38,8 +38,8 @@ import usersManager from "../data/users.manager.js";
 
     async function readUser(req, res, next) {
         try {
-          const { uid } = req.params;
-          const data = await usersManager.readOne(uid);
+          const { userId } = req.params;
+          const data = await usersManager.readOne(userId);
           if (data) {
             return res.status(200).json({ data, message: "user fetched" });
           } else {
@@ -54,13 +54,13 @@ import usersManager from "../data/users.manager.js";
     
       async function updatedUser(req, res, next) {
         try {
-          const { uid } = req.params;
+          const {userId} = req.params;
           const data = req.body;
-          const updatedUser = await usersManager.update(uid, data);
+          const updatedUser = await usersManager.update(userId, data);
           if (updatedUser) {
             return res
             .status(200)
-            .json({ message: `user updated with id ${uid}` });
+            .json({ message: `user updated with id ${userId}` });
           } else {
             const error = new Error("user not found");
             error.statusCode = 404;
@@ -73,17 +73,17 @@ import usersManager from "../data/users.manager.js";
     
       async function deletedUser(req, res, next) {
         try {
-          const { uid } = req.params;
-          if (!uid) {
+          const { userId } = req.params;
+          if (!userId) {
             const error = new Error("ID is required");
             error.statusCode = 400;
             throw error;
           }
-          const deletedUser = await usersManager.delete(uid);
+          const deletedUser = await usersManager.delete(userId);
           if (deletedUser) {
             return res
             .status(204)
-            .json({ message: `user deleted with id ${uid}` });
+            .json({ message: `user deleted with id ${userId}` });
           } else {
             const error = new Error("user not found");
             error.statusCode = 404;
@@ -109,7 +109,7 @@ import usersManager from "../data/users.manager.js";
             const user = await usersManager.authenticate(email, password); 
 
             if (user) {
-                res.redirect(`/user/${user.id}`); 
+              return res.status(200).json({ userId: user.id });
             } else {
                 const error = new Error("Invalid credentials");
                 error.statusCode = 401;
@@ -122,7 +122,6 @@ import usersManager from "../data/users.manager.js";
 
       async function registerUser(req, res, next) {
         try {
-            // Renderizar el formulario de registro
             res.render("register.handlebars", {});
         } catch (error) {
             return next(error);
@@ -142,7 +141,7 @@ import usersManager from "../data/users.manager.js";
             throw error;
           }
           
-          // Verificar si el usuario ya existe
+      
           const existingUser = await usersManager.readByEmail(email);
           if (existingUser) {
             const error = new Error("User already exists");
@@ -151,9 +150,9 @@ import usersManager from "../data/users.manager.js";
           }
       
           const userId = await usersManager.create(data);
-          return res
-            .status(201)
-            .json({ message: `user registered with id ${userId}` });
+           return res.redirect(`/userProfile/${userId}`);
+           // .status(201)
+          //  .json({ message: `user registered with id ${userId}` });
         } catch (error) {
           return next(error);
         }
@@ -161,10 +160,10 @@ import usersManager from "../data/users.manager.js";
 
       async function showUser(req, res, next) {
         try {
-            const { userId } = req.params; // Asegúrate de que estás usando el nombre correcto
+            const { userId } = req.params; 
             const user = await usersManager.readOne(userId);
             if (user) {
-                res.render("userProfile.handlebars", { user }); // Renderiza la vista del perfil del usuario
+                res.render("userProfile.handlebars", { user }); 
             } else {
                 const error = new Error("User not found");
                 error.statusCode = 404;

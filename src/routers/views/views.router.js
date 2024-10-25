@@ -12,10 +12,10 @@ const viewRouter = Router()
 viewRouter.get("/", showHome);
 viewRouter.get("/products/admin", showAdminPanel);
 
-viewRouter.get("/user/login", showLogin);
-viewRouter.post("/user/login", login);
-viewRouter.get("/user/register", registerUser);
-viewRouter.post("/user/register", registerUsers);
-viewRouter.get("/user/:userId", showUser);
+viewRouter.get("/users/login", showLogin);
+viewRouter.post("/users/login", login);
+viewRouter.get("/users/register", registerUser);
+viewRouter.post("/users/register", registerUsers);
+viewRouter.get("/users/:userId", showUser);
 
 export default viewRouter

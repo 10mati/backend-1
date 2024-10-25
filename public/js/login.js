@@ -5,20 +5,21 @@ const password = document.querySelector("#password");
 loginForm.onsubmit = async (e) => {
   e.preventDefault();
 
-  if (loginForm.checkValidity) {
-    const response = await fetch("/user/login", {
+  if (loginForm.checkValidity()) {
+    const response = await fetch("/users/login", {
       method: "POST",
       headers: {
-        "content-Type": "application/json",
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({ email: email.value, password: password.value }),
     });
     if (response.status === 200) {
       const json = await response.json();
-      const userId = json.response;
+      const userId = json.userId;
       window.location.replace(`/users/${userId}`);
     } else {
       alert("invalid email or password");
     }
   }
 };
+

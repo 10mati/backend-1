@@ -1,12 +1,8 @@
 [
-  {
-    "email": "silvamatias_07@hotmail.com",
-    "password": 12345,
-    "id": "dc632195868af87101630dda"
-  },
+  
   {
     "email": "silvamatias_07@gmail.com",
-    "password": 12345678910,
+    "password": "12345678910",
     "id": "50fd07a57f456f5a25f12887"
   },
   {
@@ -18,5 +14,16 @@
     "email": "cecilialuparodi@gmail.com",
     "password": "1234567",
     "id": "5fd6253f3e97c14a6dc77d9a"
+  },
+  {
+    "email": "damianparodi@gmail.com",
+    "password": "123",
+    "id": "89d0f3b1d6c33730bc8e78d0"
+  },
+  {
+    "email": "cristian@gmail.com",
+    "password": "12345",
+    "id": "d29ee15437c466c31671ed60"
   }
+  
 ]

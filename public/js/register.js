@@ -6,7 +6,7 @@ registerForm.onsubmit = async (e) => {
   e.preventDefault();
 
   if (registerForm.checkValidity()) {
-    const response = await fetch("/user/register", {
+    const response = await fetch("/users/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
