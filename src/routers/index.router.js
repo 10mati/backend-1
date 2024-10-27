@@ -1,5 +1,5 @@
 import { Router } from "express";
-import apiRouter from "./api/index.api.js";
+import apiRouter from "./mongo/index.api.js";
 import viewRouter from "./views/views.router.js";
 
 
