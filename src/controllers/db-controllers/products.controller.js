@@ -103,5 +103,23 @@ const destroy = async (req, res, next) => {
     return next(error);
   }
 };
+async function showHome(req, res, next) {
+  try {
+   const products = await productsMongoManager.readAll();
+      return res.render("home.handlebars", { products });
+      
+  } catch (error) {
+    next(error);
+  }
+}
 
-export { create, readAll, paginate, read, update, destroy };
+async function showAdminPanel(req, res, next) {
+  try {
+      const products = await productsMongoManager.readAll(); 
+      return res.render("admin.handlebars", { products }); 
+  } catch (error) {
+      next(error);
+  }
+}
+
+export { create, readAll, paginate, read, update, destroy, showHome, showAdminPanel };

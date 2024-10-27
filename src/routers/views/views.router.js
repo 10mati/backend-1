@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { showHome, showAdminPanel } from "../../controllers/products.controllers.js";
+import { showHome, showAdminPanel } from "../../controllers/db-controllers/products.controller.js";
 import { login, showLogin } from "../../controllers/users.controllers.js";
 import { registerUser } from "../../controllers/users.controllers.js";
 import { registerUsers } from "../../controllers/users.controllers.js";
