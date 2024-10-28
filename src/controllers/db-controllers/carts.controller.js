@@ -80,7 +80,6 @@ const destroy = async (req, res, next) => {
 const calculateTotal = async (req, res, next) => {
     try {
         const { uid } = req.params;
-        // OJO!!! en los parametros tengo que pasar el id del usuario!!!
         const response = await cartsMongoManager.calculateTotal(uid)
         return res.status(200).json({ response })
     } catch (error) {
@@ -88,4 +87,45 @@ const calculateTotal = async (req, res, next) => {
     }
 }
 
-export { create, readAll, read, update, destroy, calculateTotal }
+ /*async function cartsView(req, res, next) {
+    try {
+        const { cid } = req.params;
+        if (req.query.car_id) {
+            filter.car_id = req.query.car_id;
+        }
+        const responseMongo = await cartsMongoManager.read(cid)
+        console.log(responseMongo);
+        if (responseMongo) {
+            return res.render("carts", { data: responseMongo })
+        } else {
+            const error = new Error("CART NOT FOUND")
+            error.statusCode = 404;
+            throw error
+        }
+
+    } catch (error) {
+        return next(error)
+    }
+}*/
+
+async function cartsView(req, res, next) {
+    try {
+        const { cid } = req.params; // Obtén el ID del carrito desde los parámetros
+        const responseMongo = await cartsMongoManager.read(cid); // Busca el carrito por su ID
+        console.log(responseMongo);
+        if (responseMongo) {
+            return res.render("carts", { data: responseMongo }); // Renderiza la vista con los datos del carrito
+        } else {
+            const error = new Error("CART NOT FOUND");
+            error.statusCode = 404;
+            throw error;
+        }
+    } catch (error) {
+        return next(error);
+    }
+}
+
+
+
+
+export { create, readAll, read, update, destroy, calculateTotal, cartsView}

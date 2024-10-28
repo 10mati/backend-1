@@ -7,7 +7,9 @@ const schema = new Schema({
   photo: {
     type: String,
     default:
-      "https://economipedia.com/wp-content/uploads/Definicion-de-Producto-1.jpg",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQcovMeU1WX2DGX1vxh_mBjeQD5P3T0uZyEAk_kzjPSlxR_GcLAGVKE40CkLLNKvGhpAP8&usqp=CAU",
+  
+      
   },
   category: { type: String, default: "celulares", index: true },
   price: { type: Number, default: 1, min: 0, max: 1000 },
@@ -15,8 +17,5 @@ const schema = new Schema({
 });
 
 schema.plugin(mongoosePaginator)
-// le indico al schema que tiene habilitado ademas de todos los metodos de mongoose
-// el método paginate() para poder paginar los documentos de la coleccion
-// MINIMO PAGINAR PRODUCTOS
 const Product = model(collection, schema);
 export default Product;

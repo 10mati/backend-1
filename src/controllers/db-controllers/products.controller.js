@@ -28,31 +28,14 @@ const readAll = async (req, res, next) => {
 };
 const paginate = async (req, res, next) => {
   try {
-    // const filter = req.query
-    const { page, limit } = req.query
-    const response = await productsMongoManager.paginate({}, { page, limit })
-    // paginate acepta dos argumentos
-    // el primero es para el filtro
-    // y el segundo es para la paginacion
-    // console.log(response);    
-    if (response.docs.length > 0) {
-      return res.status(200).json({
-        message: "PRODUCTS READ",
-        response: response.docs,
-        prevPage: response.prevPage,
-        hasPrevPage: response.hasPrevPage,
-        nextPage: response.nextPage,
-        hasNextPage: response.hasNextPage
-      });
-    } else {
-      const error = new Error("PRODUCTS NOT FOUND");
-      error.statusCode = 404;
-      throw error;
-    }
+    const { page, limit = 6 } = req.query;
+    const response = await productsMongoManager.paginate({}, { page, limit });
+    return response; 
   } catch (error) {
-    return next(error)
+    return next(error);
   }
-}
+};
+
 const read = async (req, res, next) => {
   try {
     const { pid } = req.query;
@@ -105,9 +88,9 @@ const destroy = async (req, res, next) => {
 };
 async function showHome(req, res, next) {
   try {
-   const products = await productsMongoManager.readAll();
-      return res.render("home.handlebars", { products });
-      
+    const products = await productsMongoManager.readAll();
+    return res.render("home.handlebars", { products });
+
   } catch (error) {
     next(error);
   }
@@ -115,11 +98,42 @@ async function showHome(req, res, next) {
 
 async function showAdminPanel(req, res, next) {
   try {
-      const products = await productsMongoManager.readAll(); 
-      return res.render("admin.handlebars", { products }); 
+    const products = await productsMongoManager.readAll();
+    return res.render("admin.handlebars", { products });
   } catch (error) {
-      next(error);
+    next(error);
   }
 }
 
-export { create, readAll, paginate, read, update, destroy, showHome, showAdminPanel };
+async function showpaginated(req, res, next) {
+  try {
+    let filter = {};
+    if (req.query.category) {
+      filter.category = req.query.category;
+    }
+    const options = {
+      page: req.query.page || 1,
+      limit: 6,
+    };
+    const responseMongo = await productsMongoManager.paginate(filter, options);
+    if (responseMongo.docs.length > 0) {
+      return res.render("home.handlebars", { 
+        products: responseMongo.docs, 
+        hasPrevPage: responseMongo.hasPrevPage, 
+        prevPage: responseMongo.prevPage, 
+        hasNextPage: responseMongo.hasNextPage, 
+        nextPage: responseMongo.nextPage, 
+        page: responseMongo.page, 
+        totalPages: responseMongo.totalPages 
+      });
+    } else {
+      const error = new Error("NOT FOUND");
+      error.statusCode = 404;
+      throw error;
+    }
+  } catch (error) {
+    return next(error);
+  }
+};
+
+export { create, readAll, paginate, read, update, destroy, showHome, showAdminPanel, showpaginated };
