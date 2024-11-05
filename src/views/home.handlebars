@@ -12,7 +12,7 @@
           <li class="list-group-item text-center">Precio: <strong>{{this.price}}</strong></li>
         </ul>
         <div class="text-center">
-          <a href="#" class="btn btn-success">Comprar</a>
+          <a href="/carts/add/{{this._id}}" class="btn btn-success">Agregar al carrito</a> 
         </div>
       </div>
     </div>
@@ -20,7 +20,7 @@
   {{/each}}
 </section>
 
-<div class="d-flex justify-content-center mt-3"> <!-- Contenedor para los botones -->
+<div class="d-flex justify-content-center mt-3"> 
   {{#if hasPrevPage}}
     <a href="?page={{prevPage}}&limit=6" class="btn btn-primary btn-sm mx-1">Anterior</a> <!-- Botón más pequeño -->
   {{/if}}

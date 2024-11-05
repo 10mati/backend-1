@@ -1,15 +1,42 @@
-<h1>CARRITO</h1>
 
-<section>
-    {{#each products}}
-    <div id={{this._id}} class="d-flex-col justify-content-center align-items-center">
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item mx-auto">
-                <a href="/products/{{this.product_id._id}}">{{this.product_id.title}}</a>
-                price: ${{this.product_id.price}}
-            </li>
-        </ul>
 
+
+<h1 class="text-center my-4">CARRITO</h1>
+
+<section class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Precio</th>
+                        <th>Cantidad</th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each products}} 
+                    <tr>
+                        <td>
+                            <img src="{{product.photo}}" alt="{{product.title}}" class="img-fluid" style="max-width: 100px;"/> <!-- Imagen del producto -->
+                            <a href="/products/{{product._id}}">{{product.title}}</a>
+                        </td>
+                        <td>${{price}}</td>
+                        <td>{{quantity}}</td>
+                        
+                    </tr>
+                      {{/each}}
+                </tbody>
+            </table>
+            <h3>Total: ${{total}}</h3>
+        </div>
     </div>
-    {{/each}}
+    div class="text-center mt-4">
+        {{#if userId}} <!-- Verifica si userId está definido -->
+            <a href="/checkout" class="btn btn-success">Comprar</a> <!-- Redirige a la página de checkout -->
+        {{else}}
+            <a href="/login" class="btn btn-danger">Iniciar sesión para comprar</a> <!-- Redirige a la página de inicio de sesión -->
+        {{/if}}
+    </div>
 </section>

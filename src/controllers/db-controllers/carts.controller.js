@@ -1,4 +1,6 @@
 import cartsMongoManager from "../../data/mongo/managers/cart.manager.js";
+import productsMongoManager from "../../data/mongo/managers/product.manager.js";
+
 
 const create = async (req, res, next) => {
     try {
@@ -12,6 +14,48 @@ const create = async (req, res, next) => {
         return next(error)
     }
 }
+
+const addToCart = async (req, res, next) => {
+    try {
+        const productId = req.params.productId; // ID del producto
+        const userId = req.user ? req.user._id : null; // Obtén el ID del usuario si está autenticado
+
+        // Primero, busca el producto en la base de datos para obtener su información
+        const product = await productsMongoManager.read(productId);
+        if (!product) {
+            return res.status(404).json({ message: "PRODUCT NOT FOUND" });
+        }
+
+        if (!userId) {
+            // Si el usuario no está autenticado, redirige a la página de inicio de sesión
+            return res.redirect('/login'); // Cambia esto según tu ruta de inicio de sesión
+        }
+
+        // Busca el carrito del usuario
+        let cart = await cartsMongoManager.readByUserId(userId);
+
+        if (!cart) {
+            // Si no existe el carrito, crea uno nuevo
+            cart = await cartsMongoManager.create({ user_id: userId, products: [] });
+        }
+
+        // Agrega el producto al carrito
+        const cartItem = {
+            product_id: product._id,
+            title: product.title,
+            price: product.price,
+            quantity: 1 // Puedes ajustar la cantidad según sea necesario
+        };
+
+        // Lógica para agregar el producto al carrito
+        await cartsMongoManager.addProductToCart(cart._id, cartItem);
+
+        return res.redirect(`/carts/${cart._id}`);
+    } catch (error) {
+        return next(error);
+    }
+};
+
 const readAll = async (req, res, next) => {
     try {
         const filter = req.query
@@ -87,34 +131,22 @@ const calculateTotal = async (req, res, next) => {
     }
 }
 
- /*async function cartsView(req, res, next) {
-    try {
-        const { cid } = req.params;
-        if (req.query.car_id) {
-            filter.car_id = req.query.car_id;
-        }
-        const responseMongo = await cartsMongoManager.read(cid)
-        console.log(responseMongo);
-        if (responseMongo) {
-            return res.render("carts", { data: responseMongo })
-        } else {
-            const error = new Error("CART NOT FOUND")
-            error.statusCode = 404;
-            throw error
-        }
 
-    } catch (error) {
-        return next(error)
-    }
-}*/
 
 async function cartsView(req, res, next) {
     try {
-        const { cid } = req.params; // Obtén el ID del carrito desde los parámetros
-        const responseMongo = await cartsMongoManager.read(cid); // Busca el carrito por su ID
-        console.log(responseMongo);
+        const { cid } = req.params;
+        const responseMongo = await cartsMongoManager.read(cid);
         if (responseMongo) {
-            return res.render("carts", { data: responseMongo }); // Renderiza la vista con los datos del carrito
+            const totalResponse = await cartsMongoManager.calculateTotal(responseMongo.user_id); 
+            const total = totalResponse.total;
+            return res.render("carts", {
+                product: responseMongo.product_id,
+                userId: responseMongo.user_id.email,
+                quantity: responseMongo.quantity,
+                price: responseMongo.price,
+                total: total
+            });
         } else {
             const error = new Error("CART NOT FOUND");
             error.statusCode = 404;
@@ -128,4 +160,4 @@ async function cartsView(req, res, next) {
 
 
 
-export { create, readAll, read, update, destroy, calculateTotal, cartsView}
+export { create, readAll, read, update, destroy, calculateTotal, cartsView, addToCart }
