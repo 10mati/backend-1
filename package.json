@@ -11,14 +11,15 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "cookie-parser": "^1.4.7",
     "dotenv": "^16.4.5",
     "express": "^4.21.0",
     "express-handlebars": "^8.0.1",
     "mongoose": "^8.7.2",
     "mongoose-paginate-v2": "^1.8.5",
     "morgan": "^1.10.0",
-    "nodemon": "^3.1.7"
+    "nodemon": "^3.1.7",
+    "passport-jwt": "^4.0.1"
   },
-  "devDependencies": {},
-  "description": ""
+  "description": "Este proyecto es un servidor web construido con **Express.js** que utiliza **Handlebars** como motor de plantillas. Está diseñado para manejar la gestión de productos en un panel de administración, permitiendo a los usuarios crear, actualizar, eliminar y listar productos de manera eficiente. El servidor se conecta a una base de datos MongoDB para almacenamiento persistente."
 }

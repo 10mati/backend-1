@@ -172,7 +172,22 @@ import usersManager from "../data/users.manager.js";
         } catch (error) {
             next(error);
         }
-    }
+      }
+
+       async function  privateData (req, res, next)  {
+          try {
+            if (!req.user) {
+              throw new Error("No se puede acceder a los datos del usuario");
+            
+            }  res.json({
+              user: req.user,
+            });
+          } catch (error) {
+            next(error);
+          }
+        }
+      
+    
 
   export {
     readUsers,
@@ -184,6 +199,7 @@ import usersManager from "../data/users.manager.js";
     login, 
     registerUser, 
     registerUsers, 
-    showUser
+    showUser,
+    privateData
     
   }
